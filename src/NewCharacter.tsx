@@ -37,7 +37,7 @@ export default function NewCharacter(props: Readonly<NewCharacterProps>) {
 
     return (
         <>
-            <button style={{width: "100%", marginBottom: "10px"}} onClick={() => navigate("/")}>Go back</button>
+            <button onClick={() => navigate("/")}>Go back</button>
             <form onSubmit={handleSubmit}>
                 <label htmlFor="name">Name
                 <input onChange={handleChange} type="text" id="name" name="name"/>

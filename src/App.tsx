@@ -8,7 +8,7 @@ import RickAndMortyGallery from "./RickAndMortyGallery.tsx";
 import NewCharacter from "./NewCharacter.tsx";
 
 export default function App() {
-    const [characters, setCharacters] = useState<RickAndMortyCharacter[]>(response);
+    const [characters, setCharacters] = useState<RickAndMortyCharacter[]>(response.results);
     const [searchText, setSearchText] = useState("");
 
     const filteredCharacters = characters
@@ -23,7 +23,7 @@ export default function App() {
             <Routes>
                 <Route path="/" element={<RickAndMortyGallery handleSearchTextChange={setSearchText}
                                                               chars={filteredCharacters}/>}/>
-                <Route path="/characters/new" element={<NewCharacter onAddCharacter={addCharacter}/>}/>
+                <Route path="/character/new" element={<NewCharacter onAddCharacter={addCharacter}/>}/>
             </Routes>
         </>
     );
