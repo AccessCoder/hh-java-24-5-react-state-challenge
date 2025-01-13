@@ -2,25 +2,29 @@
 import './App.css'
 import {useState} from "react";
 import {response} from "./Character.ts";
-import RickAndMortyGallery, {RickAndMortyChar} from "./RickAndMortyGallery.tsx";
+import {RickAndMortyCharacter} from "./types/RickAndMortyCharacter.ts";
+import {Route, Routes} from "react-router-dom";
+import RickAndMortyGallery from "./RickAndMortyGallery.tsx";
+import NewCharacter from "./NewCharacter.tsx";
 
-function App() {
+export default function App() {
+    const [characters, setCharacters] = useState<RickAndMortyCharacter[]>(response);
+    const [searchText, setSearchText] = useState("");
 
-    const [RMChars, setRMChars] = useState(response)
-    const [Search, setSearch] = useState<string>("")
+    const filteredCharacters = characters
+        .filter((character) => character.name.toLowerCase().includes(searchText.toLowerCase()));
 
-    let filteredCharacters:RickAndMortyChar[] = RMChars.results.filter((char) => char.name.toLowerCase().includes(Search.toLowerCase()) )
+    function addCharacter(character: RickAndMortyCharacter) {
+        setCharacters([...characters, character]);
+    }
 
-  return (
-    <>
-        <input onChange={(event) => setSearch(event.target.value) }/>
-        {filteredCharacters.length > 0 ?
-            <RickAndMortyGallery chars={filteredCharacters} />
-            :
-            <h2>No Chars found!</h2>
-        }
-    </>
-  )
+    return (
+        <>
+            <Routes>
+                <Route path="/" element={<RickAndMortyGallery handleSearchTextChange={setSearchText}
+                                                              chars={filteredCharacters}/>}/>
+                <Route path="/characters/new" element={<NewCharacter onAddCharacter={addCharacter}/>}/>
+            </Routes>
+        </>
+    );
 }
-
-export default App
